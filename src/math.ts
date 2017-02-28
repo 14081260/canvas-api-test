@@ -1,28 +1,5 @@
-// window.onload = () =>{
-//     var DEG = Math.PI / 180;
-//     var c = document.getElementById("myCanvas") as HTMLCanvasElement
-//     var context2D = c.getContext("2d");
-//     context2D.fillStyle = "FF0000";
-
-//     var m1 = new math.Matrix(2,Math.cos(30 * DEG),Math.sin);
-
-//    // a c tx     x   ax + cy + tx
-//    // b d ty  *  y = bx + dy + ty 
-//    // 0 0 1      1        1
-
-//    `
-
-//    2 0 100
-//    0 1 0
-//    0 0 1 
-//    `
-
-// //    var a = new COntainer();
-// //    a.x = 100;
-// //    a.scaleX = 2;
-// }
-
 module math {
+
 
     export class Point {
         x: number;
@@ -31,6 +8,33 @@ module math {
             this.x = x;
             this.y = y;
         }
+    }
+
+    export class Rectangle {
+        x = 0;
+        y = 0;
+        width = 1;
+        height = 1;
+
+        constructor(_x: number, _y: number, _width: number, _height: number) {
+            this.x = _x;
+            this.y = _y;
+            this.width = _width;
+            this.height = _height;
+        }
+
+        isPointInRectangle(point: Point) {
+            let rect = this;
+            if (point.x < rect.width + rect.x &&
+                point.y < rect.height + rect.y &&
+                point.x > rect.x &&
+                point.y > rect.y) {
+
+                return true;
+            }
+
+        }
+
     }
 
     export function pointAppendMatrix(point: Point, m: Matrix): Point {
@@ -83,6 +87,7 @@ module math {
         return result;
     }
 
+
     var PI = Math.PI;
     var HalfPI = PI / 2;
     var PacPI = PI + HalfPI;
@@ -125,11 +130,19 @@ module math {
 
             var u = Math.cos(skewX);
             var v = Math.sin(skewX);
+
             this.a = Math.cos(skewY) * scaleX;
             this.b = Math.sin(skewY) * scaleX;
             this.c = -v * scaleY;
             this.d = u * scaleY;
 
         }
+
+        updateSkewMatrix(b: number, c: number) {
+            this.b = b;
+            this.c = c;
+        }
+
+
     }
 }

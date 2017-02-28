@@ -1,21 +1,3 @@
-// window.onload = () =>{
-//     var DEG = Math.PI / 180;
-//     var c = document.getElementById("myCanvas") as HTMLCanvasElement
-//     var context2D = c.getContext("2d");
-//     context2D.fillStyle = "FF0000";
-//     var m1 = new math.Matrix(2,Math.cos(30 * DEG),Math.sin);
-//    // a c tx     x   ax + cy + tx
-//    // b d ty  *  y = bx + dy + ty 
-//    // 0 0 1      1        1
-//    `
-//    2 0 100
-//    0 1 0
-//    0 0 1 
-//    `
-// //    var a = new COntainer();
-// //    a.x = 100;
-// //    a.scaleX = 2;
-// }
 var math;
 (function (math) {
     var Point = (function () {
@@ -26,6 +8,29 @@ var math;
         return Point;
     }());
     math.Point = Point;
+    var Rectangle = (function () {
+        function Rectangle(_x, _y, _width, _height) {
+            this.x = 0;
+            this.y = 0;
+            this.width = 1;
+            this.height = 1;
+            this.x = _x;
+            this.y = _y;
+            this.width = _width;
+            this.height = _height;
+        }
+        Rectangle.prototype.isPointInRectangle = function (point) {
+            var rect = this;
+            if (point.x < rect.width + rect.x &&
+                point.y < rect.height + rect.y &&
+                point.x > rect.x &&
+                point.y > rect.y) {
+                return true;
+            }
+        };
+        return Rectangle;
+    }());
+    math.Rectangle = Rectangle;
     function pointAppendMatrix(point, m) {
         var x = m.a * point.x + m.c * point.y + m.tx;
         var y = m.b * point.x + m.d * point.y + m.ty;
@@ -103,6 +108,10 @@ var math;
             this.b = Math.sin(skewY) * scaleX;
             this.c = -v * scaleY;
             this.d = u * scaleY;
+        };
+        Matrix.prototype.updateSkewMatrix = function (b, c) {
+            this.b = b;
+            this.c = c;
         };
         return Matrix;
     }());
